@@ -21,9 +21,6 @@ return {
       { 'hrsh7th/cmp-calc' },
       { 'kdheepak/cmp-latex-symbols' },
       { 'micangl/cmp-vimtex' },
-      --{'Kaiser-Yang/blink-cmp-dictionary',
-      --    dependencies = { 'nvim-lua/plenary.nvim' }
-      --}
     },
     -- use a release tag to download pre-built binaries
     version = '*',
@@ -62,26 +59,17 @@ return {
 	},
 	providers = {-- blink.compact provides via nvim-cmp
 	  calc = { name = 'calc', 
-	           module = 'blink.compat.source'},
+	           module = 'blink.compat.source'
+	  },
 	  latex_symbols = { name = 'latex_symbols', 
 			    module = 'blink.compat.source', 
 			    -- show symbols but insert text
-			    opts = {strategy = 2} },
+			    opts = {strategy = 2}
+	  },
 	  vimtex = { name = 'vimtex', 
 		     module = 'blink.compat.source',
 		     score_offset = 1,
-		   },
-          --dictionary = {
-          --  module = 'blink-cmp-dictionary',
-          --  name = 'Dict',
-	  --  score_offset = -3,
-          --  min_keyword_length = 3,
-          --  opts = {
-	  --    dictionary_directories = {
-	  --      vim.fn.expand('~/.config/nvim/dictionary') 
-	  --    },
-          --  }
-          --}
+	  },
 	}
       },
 

@@ -2,22 +2,19 @@ return {
   { -- Mason to manage language servers
     "williamboman/mason.nvim",
     config = function()
-      require("mason").setup({
-        ui = {
-          icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗",
-          },
-        },
-      })
+      require("mason").setup()
     end,
   },
   { -- further connect mason and lsp-config
     "williamboman/mason-lspconfig.nvim",
     config = function()
       require("mason-lspconfig").setup({
-        ensure_installed = { "lua_ls", "clangd", "pyright" },
+        ensure_installed = {
+          "lua_ls",
+          "clangd",
+          "pyright",
+          "ltex",
+        },
       })
     end,
   },
@@ -39,10 +36,15 @@ return {
     opts = {
       servers = {
         lua_ls = {},
-        clangd = { -- add capabilities to server configuration
-          cmd = { "clangd" },
-        },
+        clangd = {},
         pyright = {},
+        ltex = {
+          settings = {
+            ltex = {
+              language = "en-CA",
+            },
+          },
+        },
       },
     },
 

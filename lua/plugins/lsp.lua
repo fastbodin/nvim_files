@@ -1,30 +1,38 @@
 return {
-  -- LSP servers and clients communicate which features they support through "capabilities".
-  --  By default, Neovim supports a subset of the LSP specification.
-  --  With blink.cmp, Neovim has _more_ capabilities which are communicated to the LSP servers.
-  --  Explanation from TJ: https://youtu.be/m8C0Cq9Uv9o?t=1275
-  --
-  -- This can vary by config, but in general for nvim-lspconfig:
-
   {
-    'neovim/nvim-lspconfig',
-    dependencies = { 'saghen/blink.cmp' },
-
-    -- example using `opts` for defining servers
-    opts = {
-      servers = {
-	clangd = {}
-      }
+    "neovim/nvim-lspconfig",
+    dependencies = {
+      'saghen/blink.cmp',
+      {
+        "folke/lazydev.nvim",
+        opts = {
+          library = {
+            { path = "${3rd}/luv/library", words = { "vim%.uv" } },
+          },
+        },
+      },
     },
-    config = function(_, opts)
-      local lspconfig = require('lspconfig')
-      for server, config in pairs(opts.servers) do
-	-- passing config.capabilities to blink.cmp merges with the capabilities in your
-	-- `opts[server].capabilities, if you've defined it
-	config.capabilities = require('blink.cmp').get_lsp_capabilities(config.capabilities)
-	lspconfig[server].setup(config)
-      end
-    end
+    config = function()
+      local capabilities = require('blink.cmp').get_lsp_capabilities()
+      require("lspconfig").lua_ls.setup { capabilites = capabilities }
+      require("lspconfig").clangd.setup { capabilites = capabilities }
 
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(args)
+          local c = vim.lsp.get_client_by_id(args.data.client_id)
+          if not c then return end -- return if no client
+
+          -- Format the current buffer on save
+          if c.supports_method('textDocument/formatting') then
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              buffer = args.buf,
+              callback = function()
+                vim.lsp.buf.format({ bufnr = args.buf, id = c.id })
+              end,
+            })
+          end
+        end,
+      })
+    end,
   }
 }

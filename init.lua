@@ -35,3 +35,13 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 })
 vim.opt.hlsearch = true -- highlight on search
 vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>") -- clear on <Esc> in Normal
+
+-- restore cursor position
+vim.api.nvim_create_autocmd({ "BufReadPost" }, {
+  pattern = { "*" },
+  callback = function()
+    if vim.fn.line("'\"") > 1 and vim.fn.line("'\"") <= vim.fn.line("$") then
+      vim.api.nvim_exec2('silent! normal! g`"zv', { output = false })
+    end
+  end,
+})

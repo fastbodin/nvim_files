@@ -38,13 +38,7 @@ return {
         lua_ls = {},
         clangd = {},
         pyright = {},
-        ltex = {
-          settings = {
-            ltex = {
-              language = "en-CA",
-            },
-          },
-        },
+        ltex = {},
       },
     },
 

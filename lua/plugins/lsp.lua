@@ -59,23 +59,6 @@ return {
         config.capabilities = require("blink.cmp").get_lsp_capabilities(config.capabilities)
         lspconfig[server].setup(config)
       end
-
-      --vim.api.nvim_create_autocmd('LspAttach', {
-      --  callback = function(args)
-      --    local c = vim.lsp.get_client_by_id(args.data.client_id)
-      --    if not c then return end -- return if no client
-
-      --    -- Format the current buffer on save
-      --    if c.supports_method('textDocument/formatting') then
-      --      vim.api.nvim_create_autocmd('BufWritePre', {
-      --        buffer = args.buf,
-      --        callback = function()
-      --          vim.lsp.buf.format({ bufnr = args.buf, id = c.id })
-      --        end,
-      --      })
-      --    end
-      --  end,
-      --})
     end,
   },
 }

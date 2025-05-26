@@ -38,7 +38,15 @@ return {
         lua_ls = {},
         clangd = {},
         pyright = {},
-        ltex = {},
+        ltex = {
+          settings = {
+            ltex = {
+              dictionary = {
+                ["en-US"] = vim.fn.readfile(vim.fn.expand("~/.config/nvim/spell/en.utf-8.add")),
+              },
+            },
+          },
+        },
       },
     },
 

@@ -1,10 +1,11 @@
 return {
   "stevearc/conform.nvim",
-  event = "VeryLazy",
+  event = { "BufWritePre" },
+  cmd = { "ConformInfo" },
   keys = {
     {
       -- Customize or remove this keymap to your liking
-      "<leader><leader>c",
+      "<leader>s",
       function()
         require("conform").format({ async = true })
       end,
@@ -12,23 +13,25 @@ return {
       desc = "Format buffer",
     },
   },
-  opts = {},
-  config = function(_, opts)
-    require("conform").setup({
-      formatters_by_ft = {
-        lua = { "stylua" },
-        python = { "black" },
-        cpp = { "clang-format" },
-        c = { "clang-format" },
-        bib = { "bibtex-tidy" },
-      },
-    })
-    -- format on save
-    --vim.api.nvim_create_autocmd("BufWritePre", {
-    --  pattern = "*",
-    --  callback = function(args)
-    --    require("conform").format({ bufnr = args.buf })
-    --  end,
-    --})
+  -- This will provide type hinting with LuaLS
+  ---@module "conform"
+  ---@type conform.setupOpts
+  opts = {
+    -- Define your formatters
+    formatters_by_ft = {
+      lua = { "stylua" },
+      python = { "black" },
+      cpp = { "clang-format" },
+      c = { "clang-format" },
+      bib = { "bibtex-tidy" },
+    },
+    -- Set default options
+    default_format_opts = {
+      lsp_format = "fallback",
+    },
+  },
+  init = function()
+    -- If you want the formatexpr, here is the place to set it
+    vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
   end,
 }

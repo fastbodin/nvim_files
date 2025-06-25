@@ -1,5 +1,6 @@
 return {
   "ray-x/lsp_signature.nvim",
+  enabled = true,
   event = "InsertEnter",
   opts = {
     bind = true,
@@ -7,7 +8,4 @@ return {
       border = "rounded"
     }
   },
-  config = function()
-    require "lsp_signature".setup()
-  end,
 }

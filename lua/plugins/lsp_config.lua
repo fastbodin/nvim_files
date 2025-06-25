@@ -9,7 +9,9 @@ return {
         ltex = {
           language = "en-CA",
           dictionary = {
-            ["en-CA"] = vim.fn.readfile(vim.fn.expand("~/.config/nvim/spell/en.utf-8.add")),
+            ["en-CA"] = vim.fn.readfile(
+              vim.fn.expand("~/.config/nvim/spell/en.utf-8.add")
+            ),
           },
         },
       },

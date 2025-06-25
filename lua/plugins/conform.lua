@@ -25,6 +25,21 @@ return {
       c = { "clang-format" },
       bib = { "bibtex-tidy" },
     },
+    -- formatter customization
+    formatters = {
+      stylua = {
+        prepend_args = { "--column-width", "80" },
+      },
+      black = {
+        prepend_args = { "--line-length", "80" },
+      },
+      ["clang-format"] = {
+        prepend_args = { "--style", "{ColumnLimit: 80}" },
+      },
+      ["bibtex-tidy"] = {
+        prepend_args = { "--max-line-length", "80" },
+      },
+    },
     -- Set default options
     default_format_opts = {
       lsp_format = "fallback",

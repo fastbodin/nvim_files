@@ -7,7 +7,12 @@ return {
     { "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
   },
   config = function()
-    require("telescope").setup({})
+    require("telescope").setup({
+      defaults = {
+        layout_strategy = "vertical",
+        layout_config = { height = 0.8 },
+      },
+    })
     require("telescope").load_extension("fzf")
 
     local builtin = require("telescope.builtin")
@@ -20,13 +25,11 @@ return {
     vim.keymap.set("n", "<leader>fd", builtin.lsp_definitions, { desc = "[F]ind [D]ef." })
     vim.keymap.set("n", "<leader>fk", builtin.keymaps, { desc = "[F]ind [K]eymap" })
     vim.keymap.set("n", "<leader>fe", builtin.diagnostics, { desc = "[F]ind [E]rrors" })
-
     --vim.keymap.set("n", "<leader>fc", builtin.command_history, { desc = "[F]ind [C]ommand" })
     --vim.keymap.set("n", "<leader>fq", builtin.quickfix, { desc = "[F]ind [Q]uickfix" })
 
     vim.keymap.set("n", "<leader>fn", function()
       builtin.find_files({ cwd = vim.fn.stdpath("config") })
     end, { desc = "[F]ind [N]eovim files" })
-
   end,
 }

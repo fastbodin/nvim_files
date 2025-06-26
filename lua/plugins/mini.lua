@@ -1,7 +1,7 @@
 return {
   "echasnovski/mini.nvim",
   enabled = true,
-  lazy = true,
+  lazy = false,
   config = function()
     local statusline = require("mini.statusline")
     statusline.setup({ use_icons = true })
